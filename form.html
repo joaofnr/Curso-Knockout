@@ -81,10 +81,14 @@
             
             //{descricao:"", checado:false}
             self.lista = ko.observableArray([]);
-            self.descricaoItem = ko.observable();
+            self.descricaoItem = ko.observable("");
             self.alerta = ko.observable({mostrar:false, mensagem:"Formulário pronto", tipo:"info"});
             
             self.incluirItem = function(){
+                if(self.descricaoItem() == ""){
+                    self.alerta({mostrar:true, mensagem:"Preencha a descrição do item", tipo:"warning"});
+                    return;
+                }
                 self.lista.push({descricao:self.descricaoItem(), checado:false});
                 self.descricaoItem("");
                 self.alerta({mostrar:true, mensagem:"Item adicionado", tipo:"success"});
