@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exemplo Knockout</title>
+    <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <style>
+		.item-checked {
+			color: #ddd;
+			text-decoration: line-through;
+		}
+		.total{
+			padding:0 2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-8 col-offset-2">
+				<br><br>
+				<div class="card">
+
+                    <div class="card-header"><h4>Knockout Bindings</h4></div>
+
+
+                    <div class="card-body">
+                        <!-- FIRST LINE -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 data-bind="text: propA"></h4>
+                                <!-- $data means the current context -->
+                                <button data-bind="click: () => {viewParent($data)}">View Context Root</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- LEFT COL -->
+                            <div class="col-6">
+                                <ul class="list-group">
+                                    <!-- LIST ITENS -->
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-12"></div>
+                                            <div class="col-12"></div>
+                                            <div class="col-12"></div>
+                                            <div class="col-12"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- RIGHT COL -->
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>Child context</h3>
+                                        <h4 data-bind="with: context2">
+                                            <span data-bind="text: propA"></span>
+                                            <!-- $parent refers to context2 - we could use $root.viewParent($data) for the same result -->
+                                            <button data-bind="click: () => {$parent.viewParent($data)}">View Context Child</button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script src="knockout-3.5.1.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel(){
+			
+			var self = this;
+            self.propA = ko.observable("propA main context");
+            self.viewParent = function(parent){
+                console.log(parent)
+            }
+            
+            // creating a second context
+            self.context2 = ko.observable({
+                propA: ko.observable("propA child context") 
+            })
+		}
+		
+		vm = new ViewModel();
+		
+		ko.applyBindings(vm);
+		
+	</script>
+</body>
+</html>
