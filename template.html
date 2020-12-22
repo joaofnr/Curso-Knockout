@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exemplo Knockout</title>
+    <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <style>
+		.item-checked {
+			color: #ddd;
+			text-decoration: line-through;
+		}
+		.total{
+			padding:0 2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-8 col-offset-2">
+				<br><br>
+				<div class="card">
+
+                    <div class="card-header"><h4>Template Bindings</h4></div>
+
+
+                    <div class="card-body">
+                        <!-- header -->
+                        <div class="row">
+                            <div class="col-12" data-bind="template:{name:'cabecalho-template'}"></div>
+                        </div>
+
+                        <div class="row">
+                            <!-- left col -->
+                            <div class="col-6">
+                                <hr>
+                                <ul class="list-group">
+                                    
+                                </ul>
+                            </div>
+                            <!-- right col -->
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <script type="text/html" id="cabecalho-template">
+        <h3 data-bind="text: tituloCabecalho"></h3>
+        <p>Subject: <span data-bind="text: assuntoCabecalho"></span></p>
+    </script>
+
+    <script type="text/html" id="item-lista-template">
+        <h3 data-bind="text: titulo"></h3>
+        <p data-bind="text: conteudo"></p>
+        <hr>
+    </script>
+	
+	<script src="knockout-3.5.1.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel(){
+			
+			var self = this;
+            self.tituloCabecalho = ko.observable("Title");
+            self.assuntoCabecalho = ko.observable("Subject");
+		}
+		
+		vm = new ViewModel();
+		
+		ko.applyBindings(vm);
+		
+	</script>
+</body>
+</html>
