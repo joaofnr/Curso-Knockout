@@ -27,14 +27,14 @@
                     <div class="card-body">
                         <!-- header -->
                         <div class="row">
-                            <div class="col-12" data-bind="template:{name:'cabecalho-template'}"></div>
+                            <div class="col-12" data-bind="template:{name:'cabecalho-template', data:$data}"></div>
                         </div>
 
                         <div class="row">
                             <!-- left col -->
                             <div class="col-6">
                                 <hr>
-                                <ul class="list-group">
+                                <ul class="list-group" data-bind="template: {name:'item-lista-template', foreach: lista}">
                                     
                                 </ul>
                             </div>
@@ -74,6 +74,11 @@
 			var self = this;
             self.tituloCabecalho = ko.observable("Title");
             self.assuntoCabecalho = ko.observable("Subject");
+            self.lista = ko.observableArray([
+                {titulo:"Item 1", conteudo:"Content 1"},
+                {titulo:"Item 2", conteudo:"Content 2"},
+                {titulo:"Item 3", conteudo:"Content 3"}
+            ]);
 		}
 		
 		vm = new ViewModel();
