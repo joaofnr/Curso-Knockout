@@ -11,9 +11,13 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <label data-bind="text:labelText" for="">Label</label>
-                <input data-bind="value:inputValue" type="text">
-                <button data-bind="click:buttonAction" class="btn btn-primary">Ação</button>
+                <label data-bind="text: labelText" for="">Label</label>
+                <input data-bind="value: inputValue" type="text">
+                <!-- $data is each element on array -->
+                <ul data-bind="foreach: list">
+                    <li data-bind="text: $data"></li>
+                </ul>
+                <button data-bind="click: buttonAction" class="btn btn-primary">Ação</button>
             </div>
         </div>
     </div>
@@ -25,8 +29,12 @@
             var self = this;
             self.labelText = ko.observable("Label text");
             self.inputValue =  ko.observable("Input value");
+            self.list = ko.observableArray([
+                1,3,5,7,9,11
+            ]);
             self.buttonAction = function(){
-                console.log('clicked');
+               //self.list.splice(2,1); // removing
+               self.list.splice(0,0,100); // adding
             }
         }
 
