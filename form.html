@@ -103,11 +103,7 @@
             })
 
             self.itensNaoChecados = ko.pureComputed(function(){
-                var count = self.lista().filter(function (item) {
-                    return !item.checado();
-                }).length;
-
-                return count
+                return self.lista().filter(function (item) {return !item.checado(); }).length;
             })
 		}
 		
