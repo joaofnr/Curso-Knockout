@@ -11,8 +11,9 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <label data-bind="text: labelText" for="">Label</label>
-                <input data-bind="value: inputValue" type="text">
+                <label data-bind="text: labelText" for="">Label</label> <br />
+                <input data-bind="value: inputValue" type="text"> <br />
+                <span data-bind="text: computed"></span>
                 <!-- $data is each element on array -->
                 <ul data-bind="foreach: list">
                     <li data-bind="text: $data"></li>
@@ -37,16 +38,18 @@
                self.list.splice(0,0,100); // adding
             }
 
+            self.computed = ko.computed(function () {
+                return `${self.labelText()} ${self.inputValue()}`
+            }, this)
+
             //subscribe observer
-            var subscribe = self.inputValue.subscribe(function (newValue) {
-                if(newValue == "100"){
-                    self.labelText("A HUNDRED!");
-                    subscribe.dispose(); // it won't observe changes anymore
-                } else
-                    self.labelText("Type a number")
-            })
-
-
+            // var subscribe = self.inputValue.subscribe(function (newValue) {
+            //     if(newValue == "100"){
+            //         self.labelText("A HUNDRED!");
+            //         subscribe.dispose(); // it won't observe changes anymore
+            //     } else
+            //         self.labelText("Type a number")
+            // })
         }
 
         vm = new ViewModel();
