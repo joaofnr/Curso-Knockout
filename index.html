@@ -13,7 +13,7 @@
             <div class="col-xs-12">
                 <label data-bind="text: labelText" for="">Label</label> <br />
                 <input data-bind="value: inputValue" type="text"> <br />
-                <span data-bind="text: computed"></span>
+                <span data-bind="text: computed()"></span>
                 <!-- $data is each element on array -->
                 <ul data-bind="foreach: list">
                     <li data-bind="text: $data"></li>
@@ -33,41 +33,16 @@
             self.list = ko.observableArray([
                 1,3,5,7,9,11
             ]);
+
             self.buttonAction = function(){
                //self.list.splice(2,1); // removing
                self.list.splice(0,0,100); // adding
             }
-
-            // computed is used when we need to manipulate the objects.
-            // pureComputed is recommended if we need to modify another observable.
-            /*self.computed = ko.computed(function () {
-                var msg = `${self.inputValue()} is the value now`;
-                self.list.splice(2,1);
-                self.labelText(msg);
-                return msg
-            }, this) // on this context "this" is the ViewModel*/
-
-            self.computed = ko.pureComputed(function () {
-                var msg = `${self.inputValue()} is the value now`;
-                self.labelText(msg);
-                return msg
-            }) // without "this" it works too because we assigned the ViewModel to variable "self"
-
-            // doesn't work, unless we use ko.observable() inside the function scope
-            /*self.computed = ko.computed(function () {
-                var msg = `${this.inputValue()} is the value now`;
-                this.labelText(msg);
-                return msg
-            })*/
-
-            //subscribe observer
-            // var subscribe = self.inputValue.subscribe(function (newValue) {
-            //     if(newValue == "100"){
-            //         self.labelText("A HUNDRED!");
-            //         subscribe.dispose(); // it won't observe changes anymore
-            //     } else
-            //         self.labelText("Type a number")
-            // })
+            
+            //automatic computed observable - see above on data-bind that is changed to bind a function now.
+            self.computed = function () {
+                return `${self.labelText()} ${self.inputValue()}`;
+            } 
         }
 
         vm = new ViewModel();
