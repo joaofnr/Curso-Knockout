@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exemplo Knockout</title>
+    <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <style>
+		.item-checked {
+			color: #ddd;
+			text-decoration: line-through;
+		}
+		.total{
+			padding:0 2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-8 col-offset-2">
+				<br><br>
+				<div class="card">
+                    <div class="card-header"><h4>Knockout Bindings</h4></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning">Mensagem</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Lista de itens</strong>
+                                <ul class="list-group" data-bind="foreach: lista">
+                                    <li class="list-group-item" data-bind="text: descricao">
+                                        <input type="checkbox" name="" id="" /> 
+                                    </li>
+                                </ul>
+                                    <!-- <li class="list-group-item item-checked">
+                                        <input type="checkbox" name="" id="" checked>Descrição do item
+                                    </li> -->
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-2 total">Total:</div>
+                                        <div class="col-2 total">1</div>
+                                        <div class="col-2 total text-center"><input type="checkbox" name="" id=""> :</div>
+                                        <div class="col-2 total">1</div>
+                                        <div class="col-2 total text-center"><input type="checkbox" name="" id="" checked> :</div>
+                                        <div class="col-2 total">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12"><label>Descrição do item</label></div>
+                                    <div class="col-12"><input type="text" class="form-control input-sm" data-bind="value: descricaoItem" name="" id=""></div>
+                                    <div class="col-12"><br /></div>
+                                    <div class="col-12"><button class="btn btn-primary btn-block">Incluir item</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script src="knockout-3.5.1.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel(){
+			
+			var self = this;
+            
+            //{descricao:"", checado:false}
+            self.lista = ko.observableArray([{descricao:"Descrição", checado:false}]);
+            self.descricaoItem = ko.observable();
+            self.alerta = ko.observable({mostrar:false, mensagem:"", tipo:""});
+            self.incluirItem = function(){
+
+            };
+		}
+		
+		vm = new ViewModel();
+		
+		ko.applyBindings(vm);
+		
+	</script>
+</body>
+</html>
