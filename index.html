@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo Knockout</title>
-    <link rel="stylesheet" href="bootstrap-4.5.3-dist/">
+    <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -38,9 +38,27 @@
                self.list.splice(0,0,100); // adding
             }
 
-            self.computed = ko.computed(function () {
-                return `${self.labelText()} ${self.inputValue()}`
-            }, this)
+            // computed is used when we need to manipulate the objects.
+            // pureComputed is recommended if we need to modify another observable.
+            /*self.computed = ko.computed(function () {
+                var msg = `${self.inputValue()} is the value now`;
+                self.list.splice(2,1);
+                self.labelText(msg);
+                return msg
+            }, this) // on this context "this" is the ViewModel*/
+
+            self.computed = ko.pureComputed(function () {
+                var msg = `${self.inputValue()} is the value now`;
+                self.labelText(msg);
+                return msg
+            }) // without "this" it works too because we assigned the ViewModel to variable "self"
+
+            // doesn't work, unless we use ko.observable() inside the function scope
+            /*self.computed = ko.computed(function () {
+                var msg = `${this.inputValue()} is the value now`;
+                this.labelText(msg);
+                return msg
+            })*/
 
             //subscribe observer
             // var subscribe = self.inputValue.subscribe(function (newValue) {
@@ -56,15 +74,7 @@
 
         ko.applyBindings(vm);
 
-        // then we can play around with observable methods
-        vm.labelText("Your name:");
-        vm.inputValue("John");
-        // without a value, knockout interpret the method as a getter
-        console.log([
-            vm.labelText(), 
-            vm.inputValue()
-        ])
-
+        
     </script>
 </body>
 </html>
