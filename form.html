@@ -23,8 +23,14 @@
                     <div class="card-header"><h4>Knockout Bindings</h4></div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="alert alert-warning">Mensagem</div>
+                            <div class="col-12" data-bind="with: alerta">
+                                <div class="alert alert-warning" data-bind="text: mensagem, css: {
+                                    'alert-success': tipo == 'success', 
+                                    'alert-danger': tipo == 'danger', 
+                                    'alert-info': tipo == 'info',
+                                    'alert-warning': tipo == 'warning',},
+                                    visible: mostrar">                                
+                            </div>
                             </div>
                         </div>
                         <div class="row">
@@ -76,10 +82,12 @@
             //{descricao:"", checado:false}
             self.lista = ko.observableArray([]);
             self.descricaoItem = ko.observable();
-            self.alerta = ko.observable({mostrar:false, mensagem:"", tipo:""});
+            self.alerta = ko.observable({mostrar:false, mensagem:"Formulário pronto", tipo:"info"});
+            
             self.incluirItem = function(){
                 self.lista.push({descricao:self.descricaoItem(), checado:false});
                 self.descricaoItem("");
+                self.alerta({mostrar:true, mensagem:"Item adicionado", tipo:"success"});
             };
 		}
 		
