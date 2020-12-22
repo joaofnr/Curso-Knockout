@@ -36,6 +36,17 @@
                //self.list.splice(2,1); // removing
                self.list.splice(0,0,100); // adding
             }
+
+            //subscribe observer
+            var subscribe = self.inputValue.subscribe(function (newValue) {
+                if(newValue == "100"){
+                    self.labelText("A HUNDRED!");
+                    subscribe.dispose(); // it won't observe changes anymore
+                } else
+                    self.labelText("Type a number")
+            })
+
+
         }
 
         vm = new ViewModel();
@@ -50,6 +61,7 @@
             vm.labelText(), 
             vm.inputValue()
         ])
+
     </script>
 </body>
 </html>
