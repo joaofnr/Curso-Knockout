@@ -37,8 +37,8 @@
                             <div class="col-6">
                                 <strong>Lista de itens</strong>
                                 <ul class="list-group" data-bind="foreach: lista">
-                                    <li class="list-group-item">
-                                        <input type="checkbox" name="" id="" />
+                                    <li class="list-group-item" data-bind="css: {'item-checked' : $data.checado}">
+                                        <input type="checkbox" name="" id="" data-bind="checked: $data.checado" />
                                         <!-- ko text:descricao --> <!-- /ko -->
                                     </li>
                                 </ul>
@@ -50,9 +50,9 @@
                                         <div class="col-2 total">Total:</div>
                                         <div class="col-2 total" data-bind="text: lista().length">1</div>
                                         <div class="col-2 total text-center"><input type="checkbox" name="" id=""> :</div>
-                                        <div class="col-2 total">1</div>
+                                        <div class="col-2 total" data-bind="text: itensNaoChecados"></div>
                                         <div class="col-2 total text-center"><input type="checkbox" name="" id="" checked> :</div>
-                                        <div class="col-2 total">0</div>
+                                        <div class="col-2 total" data-bind="text: itensChecados"></div>
                                     </div>
                                 </div>
                             </div>
@@ -89,10 +89,26 @@
                     self.alerta({mostrar:true, mensagem:"Preencha a descrição do item", tipo:"warning"});
                     return;
                 }
-                self.lista.push({descricao:self.descricaoItem(), checado:false});
+                self.lista.push({descricao: self.descricaoItem(), checado: ko.observable(false)});
                 self.descricaoItem("");
                 self.alerta({mostrar:true, mensagem:"Item adicionado", tipo:"success"});
             };
+
+            self.itensChecados = ko.pureComputed(function(){
+                var count = self.lista().filter(function (item) {
+                    return item.checado();
+                }).length;
+
+                return count
+            })
+
+            self.itensNaoChecados = ko.pureComputed(function(){
+                var count = self.lista().filter(function (item) {
+                    return !item.checado();
+                }).length;
+
+                return count
+            })
 		}
 		
 		vm = new ViewModel();
